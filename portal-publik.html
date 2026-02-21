@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIMBAH – Portal Bantuan Rumah Ibadah Kota Depok</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap">
+<style>
+:root {
+  --green: #1a6b4a;
+  --green-mid: #2d8f63;
+  --green-light: #e8f5ef;
+  --accent: #f0a500;
+  --accent-soft: #fff8e6;
+  --red: #e05252;
+  --red-soft: #fdf0f0;
+  --blue: #3a7bd5;
+  --blue-soft: #eef4ff;
+  --gray-50: #f9fafb;
+  --gray-100: #f2f4f7;
+  --gray-200: #e4e7ec;
+  --gray-400: #98a2b3;
+  --gray-600: #475467;
+  --gray-800: #1d2939;
+  --white: #ffffff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: var(--gray-800); }
+
+/* TOPBAR */
+.topbar {
+  background: var(--green); color: white;
+  padding: 0 24px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-icon { width: 34px; height: 34px; background: rgba(255,255,255,0.18); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.brand-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 800; }
+.brand-sub { font-size: 10px; opacity: 0.75; display: block; font-weight: 400; margin-top: -2px; }
+.topbar-right { font-size: 13px; opacity: 0.85; }
+
+/* TAB MENU */
+.tab-bar {
+  background: white; border-bottom: 1px solid var(--gray-200);
+  display: flex; padding: 0 20px;
+  position: sticky; top: 60px; z-index: 99;
+}
+.tab-item {
+  padding: 16px 20px; font-size: 14px; font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--gray-400); cursor: pointer; border-bottom: 3px solid transparent;
+  transition: all 0.15s; white-space: nowrap;
+}
+.tab-item.active { color: var(--green); border-bottom-color: var(--green); }
+.tab-item:hover:not(.active) { color: var(--gray-600); }
+
+/* BODY */
+.pg-body { max-width: 680px; margin: 0 auto; padding: 32px 20px 80px; }
+
+/* HALAMAN */
+.halaman { display: none; }
+.halaman.active { display: block; }
+
+/* SECTION HEADER */
+.section-header { margin-bottom: 24px; }
+.section-header h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; color: var(--gray-800); margin-bottom: 4px; }
+.section-header p { font-size: 14px; color: var(--gray-400); line-height: 1.5; }
+
+/* FORM CARD */
+.form-card {
+  background: white; border-radius: 14px;
+  border: 1px solid var(--gray-200); padding: 24px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700;
+  color: var(--gray-800); margin-bottom: 16px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--gray-100);
+  display: flex; align-items: center; gap: 10px;
+}
+.card-title-num {
+  width: 26px; height: 26px; background: var(--green-light); color: var(--green);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+
+/* FORM ELEMENTS */
+.form-group { margin-bottom: 18px; }
+.form-group:last-child { margin-bottom: 0; }
+label {
+  display: block; font-size: 14px; font-weight: 600;
+  color: var(--gray-600); margin-bottom: 7px;
+}
+label .req { color: var(--red); margin-left: 2px; }
+.form-control {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid var(--gray-200); border-radius: 8px;
+  font-size: 15px; font-family: 'DM Sans', sans-serif;
+  color: var(--gray-800); background: var(--gray-50);
+  transition: border-color 0.15s;
+}
+.form-control:focus { outline: none; border-color: var(--green-mid); background: white; }
+.form-control::placeholder { color: var(--gray-400); }
+select.form-control { cursor: pointer; }
+.form-hint { font-size: 12px; color: var(--gray-400); margin-top: 5px; line-height: 1.4; }
+
+/* INFO NOTE */
+.note-blue {
+  background: var(--blue-soft); border: 1px solid #c3d9ff;
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 20px;
+  font-size: 13px; color: #2d5fa8; line-height: 1.6;
+}
+.note-yellow {
+  background: var(--accent-soft); border: 1px solid #f0c050;
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 20px;
+  font-size: 13px; color: #8a6000; line-height: 1.6;
+}
+.note-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; display: block; }
+
+/* DOKUMEN GUIDE */
+.doc-guide {
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+  border-radius: 10px; padding: 16px 18px; margin-bottom: 16px;
+}
+.doc-guide-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: var(--gray-600); margin-bottom: 10px; }
+.doc-list { list-style: none; padding: 0; }
+.doc-list li {
+  font-size: 13px; color: var(--gray-600); padding: 5px 0;
+  border-bottom: 1px solid var(--gray-200); display: flex; align-items: flex-start; gap: 8px;
+}
+.doc-list li:last-child { border-bottom: none; }
+.doc-num {
+  width: 20px; height: 20px; background: var(--green-light); color: var(--green);
+  border-radius: 50%; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+
+/* UPLOAD AREA */
+.upload-area {
+  border: 2px dashed var(--gray-200); border-radius: 10px;
+  padding: 28px 20px; text-align: center;
+  background: var(--gray-50); cursor: pointer;
+  transition: border-color 0.15s;
+}
+.upload-area:hover { border-color: var(--green-mid); }
+.upload-icon { font-size: 30px; margin-bottom: 8px; }
+.upload-text { font-size: 14px; color: var(--gray-400); margin-bottom: 4px; }
+.upload-link { color: var(--green); font-weight: 600; }
+.upload-sub { font-size: 12px; color: var(--gray-400); }
+
+/* TOMBOL */
+.btn-primary {
+  width: 100%; padding: 14px;
+  background: var(--green); color: white;
+  border: none; border-radius: 10px;
+  font-size: 16px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer; margin-top: 8px;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--green-mid); }
+.btn-secondary {
+  width: 100%; padding: 13px;
+  background: white; color: var(--green);
+  border: 1.5px solid var(--green); border-radius: 10px;
+  font-size: 15px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer; margin-top: 8px;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { background: var(--green-light); }
+
+/* FORM ROW */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* TRACKING */
+.tracking-search-card {
+  background: white; border-radius: 14px;
+  border: 1px solid var(--gray-200); padding: 28px 24px;
+  margin-bottom: 20px; text-align: center;
+}
+.tracking-search-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700;
+  color: var(--gray-800); margin-bottom: 6px;
+}
+.tracking-search-card p { font-size: 14px; color: var(--gray-400); margin-bottom: 20px; }
+.search-row { display: flex; gap: 10px; }
+.search-row .form-control { flex: 1; }
+.btn-search {
+  padding: 12px 20px; background: var(--green); color: white;
+  border: none; border-radius: 8px; font-size: 14px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer;
+  white-space: nowrap; transition: background 0.15s; flex-shrink: 0;
+}
+.btn-search:hover { background: var(--green-mid); }
+
+/* RESULT CARD */
+.result-card {
+  background: white; border-radius: 14px;
+  border: 1px solid var(--gray-200); padding: 22px;
+  margin-bottom: 16px; display: none;
+}
+.result-card.visible { display: block; }
+.result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.result-nomor { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: var(--gray-800); }
+.badge-yellow { color: #a16207; background: var(--accent-soft); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.badge-green { color: var(--green); background: var(--green-light); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.result-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 22px; }
+
+/* TIMELINE */
+.timeline { display: flex; flex-direction: column; }
+.tl-step { display: flex; gap: 14px; }
+.tl-left { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; }
+.tl-dot {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif; flex-shrink: 0; z-index: 1;
+}
+.tl-dot.done { background: var(--green-light); color: var(--green); }
+.tl-dot.current { background: var(--accent-soft); color: #a16207; border: 2px solid var(--accent); }
+.tl-dot.pending { background: var(--gray-100); color: var(--gray-400); border: 2px solid var(--gray-200); }
+.tl-line { width: 2px; flex: 1; min-height: 20px; margin: 3px 0; }
+.tl-line.done { background: var(--green-light); }
+.tl-line.dashed { background: repeating-linear-gradient(to bottom, var(--gray-200) 0px, var(--gray-200) 5px, transparent 5px, transparent 10px); }
+.tl-right { padding-bottom: 22px; flex: 1; }
+.tl-step:last-child .tl-right { padding-bottom: 0; }
+.tl-label {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700;
+  color: var(--gray-800); margin-bottom: 2px;
+  display: flex; align-items: center; gap: 8px; padding-top: 6px;
+}
+.tl-label.muted { color: var(--gray-400); }
+.tl-desc { font-size: 13px; color: var(--gray-400); line-height: 1.5; }
+.chip { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; flex-shrink: 0; }
+.chip-done { background: var(--green-light); color: var(--green); }
+.chip-current { background: var(--accent-soft); color: #a16207; }
+.chip-pending { background: var(--gray-100); color: var(--gray-400); }
+
+/* VERIFIKASI PENDING */
+.pending-banner {
+  background: var(--accent-soft); border: 1.5px dashed var(--accent);
+  border-radius: 12px; padding: 24px 20px; text-align: center; margin-bottom: 20px;
+}
+.pending-banner h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--gray-800); margin-bottom: 6px; }
+.pending-banner p { font-size: 14px; color: #8a6000; line-height: 1.5; }
+
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 500;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: white; border-radius: 16px; padding: 32px 28px;
+  max-width: 400px; width: 100%; text-align: center;
+}
+.modal-icon { font-size: 40px; margin-bottom: 14px; }
+.modal-box h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: var(--gray-800); margin-bottom: 8px; }
+.modal-box p { font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-bottom: 20px; }
+.modal-nomor { background: var(--green-light); color: var(--green); border-radius: 8px; padding: 10px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 20px; }
+.btn-tutup { width: 100%; padding: 13px; background: var(--green); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; }
+
+/* DUMMY CHIP */
+.dummy-chip {
+  display: inline-block; padding: 5px 12px; border-radius: 20px;
+  background: var(--gray-100); border: 1px solid var(--gray-200);
+  font-size: 12px; font-weight: 600; color: var(--blue);
+  cursor: pointer; transition: all 0.15s;
+}
+.dummy-chip:hover { background: var(--blue-soft); border-color: #a0bfef; }
+
+/* HERO CAIR */
+.hero-cair { background: var(--green); border-radius: 16px; padding: 28px 24px; text-align: center; color: white; margin-bottom: 20px; }
+.hero-cair .hc-icon { font-size: 48px; margin-bottom: 12px; }
+.hero-cair .hc-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.hero-cair .hc-sub { font-size: 14px; opacity: 0.85; margin-bottom: 18px; line-height: 1.5; }
+.hero-cair .hc-amount-box { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 14px 20px; display: inline-block; }
+.hero-cair .hc-amount-label { font-size: 12px; opacity: 0.8; margin-bottom: 3px; }
+.hero-cair .hc-amount-val { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800; }
+
+/* DETAIL CARD */
+.detail-card { background: white; border-radius: 14px; border: 1px solid var(--gray-200); padding: 20px 22px; margin-bottom: 16px; }
+.detail-card-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--gray-800); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-100); }
+.detail-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 14px; }
+.detail-row:last-child { border-bottom: none; }
+.detail-label { color: var(--gray-400); flex-shrink: 0; }
+.detail-val { font-weight: 600; color: var(--gray-800); text-align: right; }
+.detail-val.green { color: var(--green); }
+
+/* MENUNGGU CARD */
+.menunggu-card { background: white; border: 2px dashed var(--accent); border-radius: 16px; padding: 30px 22px; text-align: center; margin-bottom: 20px; }
+.menunggu-card .mc-icon { font-size: 44px; margin-bottom: 12px; }
+.menunggu-card .mc-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: var(--gray-800); margin-bottom: 8px; }
+.menunggu-card .mc-desc { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+.menunggu-card .mc-nomor { background: var(--accent-soft); border: 1px solid #f0c050; border-radius: 8px; padding: 8px 14px; font-size: 13px; color: #a16207; font-weight: 600; display: inline-block; margin: 12px 0; }
+
+/* RESPONSIVE */
+@media (max-width: 560px) {
+  .form-row { grid-template-columns: 1fr; }
+  .tab-item { padding: 14px 14px; font-size: 13px; }
+  .search-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🕌</div>
+    <div>
+      <div class="brand-text">SIMBAH</div>
+      <span class="brand-sub">Sistem Bantuan Rumah Ibadah</span>
+    </div>
+  </div>
+  <div class="topbar-right">Kota Depok</div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-item active" onclick="switchTab('pengajuan')">Pengajuan Bantuan</div>
+  <div class="tab-item" onclick="switchTab('pendaftaran')">Daftarkan Rumah Ibadah</div>
+  <div class="tab-item" onclick="switchTab('tracking')">Cek Status Pengajuan</div>
+</div>
+
+<!-- ===================== PENGAJUAN BANTUAN ===================== -->
+<div id="tab-pengajuan" class="halaman active">
+<div class="pg-body">
+
+  <div class="section-header">
+    <h2>Pengajuan Bantuan Pendanaan</h2>
+    <p>Isi formulir berikut untuk mengajukan permohonan bantuan dana dari Pemerintah Kota Depok.</p>
+  </div>
+
+  <div class="note-yellow">
+    <span class="note-title">Perhatian sebelum mengisi</span>
+    Rumah ibadah harus sudah terdaftar dan terverifikasi di sistem SIMBAH. Jika belum terdaftar, silakan daftarkan terlebih dahulu melalui tab "Daftarkan Rumah Ibadah". Pengajuan hanya dapat dilakukan satu kali dalam satu tahun kalender.
+  </div>
+
+  <!-- CARD 1: Identitas Rumah Ibadah -->
+  <div class="form-card">
+    <div class="card-title">
+      <span class="card-title-num">1</span>
+      Identitas Rumah Ibadah
+    </div>
+
+    <div class="form-group">
+      <label>Jenis Rumah Ibadah <span class="req">*</span></label>
+      <select class="form-control" onchange="updateNamaRI(this.value)">
+        <option value="">-- Pilih jenis --</option>
+        <option>Masjid</option>
+        <option>Mushola</option>
+        <option>Gereja Protestan</option>
+        <option>Gereja Katolik</option>
+        <option>Pura</option>
+        <option>Klenteng</option>
+        <option>Vihara</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Nama Rumah Ibadah <span class="req">*</span></label>
+      <select class="form-control" id="dropdown-nama-ri">
+        <option value="">-- Pilih jenis rumah ibadah terlebih dahulu --</option>
+      </select>
+      <div class="form-hint">Rumah ibadah tidak ada dalam daftar? <a href="#" onclick="switchTab('pendaftaran'); return false;" style="color:var(--green); font-weight:600;">Daftarkan di sini</a></div>
+    </div>
+
+    <div class="form-group">
+      <label>Kondisi Rumah Ibadah Saat Ini <span class="req">*</span></label>
+      <select class="form-control">
+        <option value="">-- Pilih kondisi --</option>
+        <option>Baik</option>
+        <option>Perlu Perbaikan Ringan</option>
+        <option>Perlu Perbaikan Berat</option>
+        <option>Rusak Parah</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- CARD 2: Data Pengurus -->
+  <div class="form-card">
+    <div class="card-title">
+      <span class="card-title-num">2</span>
+      Data Pengurus Pengaju
+    </div>
+
+    <div class="form-group">
+      <label>Nama Pengurus <span class="req">*</span></label>
+      <input type="text" class="form-control" placeholder="Contoh: H. Ahmad Fauzi">
+    </div>
+
+    <div class="form-group">
+      <label>No. Telepon / WhatsApp <span class="req">*</span></label>
+      <input type="tel" class="form-control" placeholder="Contoh: 08123456789">
+      <div class="form-hint">Nomor ini akan digunakan untuk konfirmasi dan informasi lanjutan.</div>
+    </div>
+  </div>
+
+  <!-- CARD 3: Rekening Penerima -->
+  <div class="form-card">
+    <div class="card-title">
+      <span class="card-title-num">3</span>
+      Rekening Penerima Dana
+    </div>
+
+    <div class="form-group">
+      <label>Bank Penerima <span class="req">*</span></label>
+      <select class="form-control">
+        <option value="">-- Pilih bank --</option>
+        <option>Bank BJB</option>
+        <option>BRI</option>
+        <option>BNI</option>
+        <option>Mandiri</option>
+        <option>BSI (Bank Syariah Indonesia)</option>
+        <option>BCA</option>
+        <option>BTN</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Nomor Rekening <span class="req">*</span></label>
+      <input type="number" class="form-control" placeholder="Masukkan nomor rekening">
+      <div class="form-hint">Pastikan nomor rekening atas nama pengurus atau rekening resmi rumah ibadah.</div>
+    </div>
+  </div>
+
+  <!-- CARD 4: Dokumen Pendukung -->
+  <div class="form-card">
+    <div class="card-title">
+      <span class="card-title-num">4</span>
+      Dokumen Pendukung
+    </div>
+
+    <div class="doc-guide">
+      <div class="doc-guide-title">Dokumen yang perlu disiapkan (format PDF atau gambar):</div>
+      <ul class="doc-list">
+        <li><span class="doc-num">1</span><span>Proposal permohonan bantuan (wajib disertakan sebagai dokumen pertama)</span></li>
+        <li><span class="doc-num">2</span><span>Surat keterangan pengurus dari kepala desa/lurah</span></li>
+        <li><span class="doc-num">3</span><span>Fotokopi KTP pengurus/ketua</span></li>
+        <li><span class="doc-num">4</span><span>Fotokopi buku rekening bank penerima</span></li>
+        <li><span class="doc-num">5</span><span>Dokumen kepemilikan atau izin penggunaan lahan (jika ada)</span></li>
+      </ul>
+    </div>
+
+    <div class="upload-area" onclick="document.getElementById('upload-dok').click()">
+      <div class="upload-icon">📎</div>
+      <div class="upload-text"><span class="upload-link">Pilih file</span> atau seret ke sini</div>
+      <div class="upload-sub">Maks. 5 file, maks. 5 MB per file. Format: PDF, JPG, PNG</div>
+    </div>
+    <input type="file" id="upload-dok" multiple accept=".pdf,.jpg,.png" style="display:none">
+  </div>
+
+  <button class="btn-primary" onclick="document.getElementById('modal-sukses').classList.add('show')">
+    Kirim Pengajuan Bantuan
+  </button>
+
+</div>
+</div><!-- end tab-pengajuan -->
+
+
+<!-- ===================== PENDAFTARAN RUMAH IBADAH ===================== -->
+<div id="tab-pendaftaran" class="halaman">
+<div class="pg-body">
+
+  <div class="section-header">
+    <h2>Daftarkan Rumah Ibadah</h2>
+    <p>Daftarkan rumah ibadah Anda agar dapat mengajukan permohonan bantuan. Data akan diverifikasi oleh petugas Pemkot Depok.</p>
+  </div>
+
+  <div class="note-blue">
+    <span class="note-title">Cara kerja pendaftaran</span>
+    Setelah formulir dikirim, petugas Pemkot Depok akan memverifikasi data Anda. Proses ini biasanya memerlukan 3-7 hari kerja. Rumah ibadah yang sudah terverifikasi akan muncul di daftar pilihan pada form Pengajuan Bantuan.
+  </div>
+
+  <div id="form-daftar">
+
+    <!-- CARD 1: Identitas -->
+    <div class="form-card">
+      <div class="card-title">
+        <span class="card-title-num">1</span>
+        Identitas Rumah Ibadah
+      </div>
+
+      <div class="form-group">
+        <label>Jenis Rumah Ibadah <span class="req">*</span></label>
+        <select class="form-control">
+          <option value="">-- Pilih jenis --</option>
+          <option>Masjid</option>
+          <option>Mushola</option>
+          <option>Gereja Protestan</option>
+          <option>Gereja Katolik</option>
+          <option>Pura</option>
+          <option>Klenteng</option>
+          <option>Vihara</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nama Rumah Ibadah <span class="req">*</span></label>
+        <input type="text" class="form-control" placeholder="Contoh: Masjid Al-Hikmah">
+      </div>
+
+      <div class="form-group">
+        <label>Kondisi Bangunan <span class="req">*</span></label>
+        <select class="form-control">
+          <option value="">-- Pilih kondisi --</option>
+          <option>Baik</option>
+          <option>Perlu Perbaikan Ringan</option>
+          <option>Perlu Perbaikan Berat</option>
+          <option>Rusak Parah</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- CARD 2: Lokasi -->
+    <div class="form-card">
+      <div class="card-title">
+        <span class="card-title-num">2</span>
+        Lokasi
+      </div>
+
+      <div class="form-group">
+        <label>Alamat Jalan <span class="req">*</span></label>
+        <input type="text" class="form-control" placeholder="Contoh: Jl. Merdeka No. 12 RT 03 RW 05">
+      </div>
+
+      <div class="form-group">
+        <label>Kecamatan <span class="req">*</span></label>
+        <select class="form-control" id="sel-kecamatan" onchange="updateKelurahan(this.value)">
+          <option value="">-- Pilih kecamatan --</option>
+          <option value="beji">Beji</option>
+          <option value="bojongsari">Bojongsari</option>
+          <option value="cilodong">Cilodong</option>
+          <option value="cimanggis">Cimanggis</option>
+          <option value="cinere">Cinere</option>
+          <option value="cipayung">Cipayung</option>
+          <option value="limo">Limo</option>
+          <option value="pancoran-mas">Pancoran Mas</option>
+          <option value="sawangan">Sawangan</option>
+          <option value="sukmajaya">Sukmajaya</option>
+          <option value="tapos">Tapos</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Kelurahan <span class="req">*</span></label>
+        <select class="form-control" id="sel-kelurahan">
+          <option value="">-- Pilih kecamatan terlebih dahulu --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Link Google Maps</label>
+        <input type="text" class="form-control" placeholder="https://maps.google.com/...">
+        <div class="form-hint">Cara mendapatkan link: buka Google Maps, cari lokasi rumah ibadah, klik Bagikan, lalu salin link yang muncul.</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="kirimPendaftaran()">
+      Kirim Pendaftaran
+    </button>
+
+  </div><!-- end form-daftar -->
+
+  <!-- STATE: Sudah terkirim, menunggu verifikasi -->
+  <div id="state-menunggu" style="display:none;">
+    <div class="pending-banner">
+      <div style="font-size:36px; margin-bottom:12px;">⏳</div>
+      <h3>Pendaftaran Sedang Diverifikasi</h3>
+      <p>Data rumah ibadah Anda sudah kami terima. Petugas Pemkot Depok akan memverifikasi dalam 3-7 hari kerja. Jika sudah disetujui, nama rumah ibadah Anda akan muncul di daftar pilihan pada form Pengajuan Bantuan.</p>
+    </div>
+    <div class="note-yellow">
+      Jika membutuhkan konfirmasi atau ada pertanyaan, silakan hubungi kantor Dinas terkait di Kota Depok dengan menyebutkan nama rumah ibadah yang didaftarkan.
+    </div>
+    <button class="btn-secondary" onclick="document.getElementById('form-daftar').style.display='block'; document.getElementById('state-menunggu').style.display='none';">
+      Daftarkan Rumah Ibadah Lain
+    </button>
+  </div>
+
+</div>
+</div><!-- end tab-pendaftaran -->
+
+
+<!-- ===================== TRACKING PENDANAAN ===================== -->
+<div id="tab-tracking" class="halaman">
+<div class="pg-body">
+
+  <div class="section-header">
+    <h2>Cek Status Pengajuan</h2>
+    <p>Masukkan nomor pengajuan yang Anda terima untuk melihat perkembangan status bantuan.</p>
+  </div>
+
+  <div class="tracking-search-card">
+    <h3>Masukkan Nomor Pengajuan</h3>
+    <p>Nomor pengajuan dikirim ke WhatsApp Anda saat pengajuan berhasil dikirim.</p>
+    <div class="search-row">
+      <input type="text" class="form-control" id="input-nomor" placeholder="Contoh: SBH-2025-0001">
+      <button class="btn-search" onclick="cariPengajuan()">Cari</button>
+    </div>
+    <div id="pesan-error" style="display:none; margin-top:12px; font-size:13px; color:var(--red);">Nomor pengajuan tidak ditemukan. Pastikan nomor sudah benar.</div>
+    <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--gray-200); text-align:left;">
+      <div style="font-size:12px; color:var(--gray-400); margin-bottom:8px; font-weight:600;">Nomor dummy untuk dicoba:</div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+        <span class="dummy-chip" onclick="isiNomor('SBH-2025-0001')">SBH-2025-0001</span>
+        <span class="dummy-chip" onclick="isiNomor('SBH-2025-0002')">SBH-2025-0002</span>
+        <span class="dummy-chip" onclick="isiNomor('SBH-2025-0003')">SBH-2025-0003</span>
+        <span class="dummy-chip" onclick="isiNomor('SBH-2025-0004')">SBH-2025-0004</span>
+        <span class="dummy-chip" onclick="isiNomor('SBH-2025-0005')">SBH-2025-0005</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AREA HASIL -->
+  <div id="area-hasil" style="display:none;"></div>
+
+</div>
+</div><!-- end tab-tracking -->
+
+
+<!-- MODAL SUKSES PENGAJUAN -->
+<div class="modal-overlay" id="modal-sukses">
+  <div class="modal-box">
+    <div class="modal-icon">✅</div>
+    <h3>Pengajuan Berhasil Dikirim</h3>
+    <p>Nomor pengajuan Anda adalah:</p>
+    <div class="modal-nomor">SBH-2025-001337</div>
+    <p>Simpan nomor ini untuk memantau status pengajuan melalui fitur "Cek Status Pengajuan". Kami akan menghubungi Anda melalui WhatsApp yang didaftarkan.</p>
+    <button class="btn-tutup" onclick="document.getElementById('modal-sukses').classList.remove('show')">Tutup</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA DUMMY 5 NOMOR PENGAJUAN
+// Masing-masing mewakili satu tahap dari pipeline 5 tahap
+// ============================================================
+const dataPengajuan = {
+  'SBH-2025-0001': {
+    nomor: 'SBH-2025-0001',
+    namaRI: 'Masjid Al-Hikmah',
+    lokasi: 'Kec. Sukmajaya',
+    tanggalAjuan: '3 Januari 2025',
+    tahapAktif: 1,
+    badge: 'Pengajuan Dikirim',
+    badgeWarna: 'blue'
+  },
+  'SBH-2025-0002': {
+    nomor: 'SBH-2025-0002',
+    namaRI: 'Gereja Bethel Depok',
+    lokasi: 'Kec. Pancoran Mas',
+    tanggalAjuan: '10 Januari 2025',
+    tahapAktif: 2,
+    badge: 'Verifikasi Dokumen',
+    badgeWarna: 'yellow'
+  },
+  'SBH-2025-0003': {
+    nomor: 'SBH-2025-0003',
+    namaRI: 'Pura Agung Sari',
+    lokasi: 'Kec. Beji',
+    tanggalAjuan: '15 Januari 2025',
+    tahapAktif: 3,
+    badge: 'Survei Lapangan',
+    badgeWarna: 'yellow'
+  },
+  'SBH-2025-0004': {
+    nomor: 'SBH-2025-0004',
+    namaRI: 'Mushola Baiturrahman',
+    lokasi: 'Kec. Cimanggis',
+    tanggalAjuan: '5 Januari 2025',
+    tahapAktif: 4,
+    badge: 'Persetujuan Anggaran',
+    badgeWarna: 'yellow'
+  },
+  'SBH-2025-0005': {
+    nomor: 'SBH-2025-0005',
+    namaRI: 'Masjid Al-Ikhlas',
+    lokasi: 'Kec. Cilodong',
+    tanggalAjuan: '7 Januari 2025',
+    tahapAktif: 5,
+    badge: 'Dana Cair',
+    badgeWarna: 'green',
+    jumlahDana: 'Rp 75.000.000',
+    tanggalCair: '12 Maret 2025',
+    rekening: 'BJB — **** 4521'
+  }
+};
+
+const tahapInfo = [
+  { label: 'Pengajuan Dikirim',    tanggal: { 'SBH-2025-0001':'3 Jan 2025',  'SBH-2025-0002':'10 Jan 2025', 'SBH-2025-0003':'15 Jan 2025', 'SBH-2025-0004':'5 Jan 2025',  'SBH-2025-0005':'7 Jan 2025'  }, deskDone: 'Pengajuan berhasil diterima oleh sistem.' },
+  { label: 'Verifikasi Dokumen',   tanggal: { 'SBH-2025-0002':'15 Jan 2025', 'SBH-2025-0003':'20 Jan 2025', 'SBH-2025-0004':'10 Jan 2025', 'SBH-2025-0005':'12 Jan 2025' }, deskDone: 'Dokumen pendukung dinyatakan lengkap dan valid.' },
+  { label: 'Survei Lapangan',      tanggal: { 'SBH-2025-0003':'28 Jan 2025', 'SBH-2025-0004':'18 Jan 2025', 'SBH-2025-0005':'22 Jan 2025' }, deskDone: 'Survei lapangan oleh petugas Pemkot Depok selesai dilaksanakan.' },
+  { label: 'Persetujuan Anggaran', tanggal: { 'SBH-2025-0004':'—', 'SBH-2025-0005':'10 Feb 2025' }, deskDone: 'Anggaran bantuan telah disetujui.' },
+  { label: 'Pencairan Dana',       tanggal: { 'SBH-2025-0005':'12 Mar 2025' }, deskDone: 'Dana telah dicairkan ke rekening yang didaftarkan.' }
+];
+
+const deskAktif = [
+  '',
+  'Pengajuan Anda sudah diterima. Petugas Pemkot Depok akan mulai memeriksa dokumen dalam waktu dekat.',
+  'Petugas sedang memeriksa kelengkapan dan keabsahan dokumen yang diunggah.',
+  'Petugas sedang melakukan kunjungan langsung ke lokasi rumah ibadah.',
+  'Tim Pemkot Depok sedang mengkaji dan menetapkan besaran anggaran bantuan. Estimasi 5–10 hari kerja.',
+  ''
+];
+
+// ============================================================
+// RENDER HASIL PENCARIAN
+// ============================================================
+function renderHasil(data) {
+  const area = document.getElementById('area-hasil');
+  const isCair = data.tahapAktif === 5;
+
+  let html = '';
+
+  if (isCair) {
+    // ---- STATE DANA CAIR ----
+    html += `
+    <div class="hero-cair">
+      <div class="hc-icon">🎊</div>
+      <div class="hc-title">Dana Bantuan Telah Dicairkan!</div>
+      <div class="hc-sub">Selamat! Dana bantuan untuk ${data.namaRI} telah berhasil dicairkan.</div>
+      <div class="hc-amount-box">
+        <div class="hc-amount-label">Jumlah Dana Diterima</div>
+        <div class="hc-amount-val">${data.jumlahDana}</div>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-card-title">Informasi Pencairan</div>
+      <div class="detail-row"><span class="detail-label">Nomor Pengajuan</span><span class="detail-val">${data.nomor}</span></div>
+      <div class="detail-row"><span class="detail-label">Rumah Ibadah</span><span class="detail-val">${data.namaRI}</span></div>
+      <div class="detail-row"><span class="detail-label">Tanggal Diajukan</span><span class="detail-val">${data.tanggalAjuan}</span></div>
+      <div class="detail-row"><span class="detail-label">Tanggal Pencairan</span><span class="detail-val">${data.tanggalCair}</span></div>
+      <div class="detail-row"><span class="detail-label">Metode Transfer</span><span class="detail-val">Transfer Bank</span></div>
+      <div class="detail-row"><span class="detail-label">Rekening Tujuan</span><span class="detail-val">${data.rekening}</span></div>
+      <div class="detail-row"><span class="detail-label">Status</span><span class="detail-val green">Selesai — Dana Diterima</span></div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-card-title">Riwayat Proses Pengajuan</div>
+      ${renderTimeline(data, true)}
+    </div>
+
+    <div class="note-blue" style="margin-bottom:0;">
+      <span class="note-title">Kewajiban Laporan Penggunaan Dana</span>
+      Setelah pekerjaan selesai, Anda wajib menyerahkan laporan penggunaan dana kepada Pemkot Depok. Laporan berisi foto progres pekerjaan dan bukti pengeluaran. Hubungi petugas Pemkot Depok untuk informasi lebih lanjut.
+    </div>`;
+
+  } else {
+    // ---- STATE MASIH PROSES ----
+    html += `
+    <div class="menunggu-card">
+      <div class="mc-icon">⏳</div>
+      <div class="mc-title">Pengajuan Sedang Diproses</div>
+      <div class="mc-desc">Pengajuan Anda saat ini berada pada tahap <strong>${tahapInfo[data.tahapAktif - 1].label}</strong>.</div>
+      <div class="mc-nomor">${data.nomor}</div>
+      <div class="mc-desc">${deskAktif[data.tahapAktif]}</div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-card-title">Detail Pengajuan</div>
+      <div class="detail-row"><span class="detail-label">Nomor Pengajuan</span><span class="detail-val">${data.nomor}</span></div>
+      <div class="detail-row"><span class="detail-label">Rumah Ibadah</span><span class="detail-val">${data.namaRI}</span></div>
+      <div class="detail-row"><span class="detail-label">Lokasi</span><span class="detail-val">${data.lokasi}</span></div>
+      <div class="detail-row"><span class="detail-label">Tanggal Diajukan</span><span class="detail-val">${data.tanggalAjuan}</span></div>
+      <div class="detail-row"><span class="detail-label">Tahap Aktif</span><span class="detail-val" style="color:var(--accent);">Tahap ${data.tahapAktif} — ${tahapInfo[data.tahapAktif - 1].label}</span></div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-card-title">Status Proses Pengajuan</div>
+      ${renderTimeline(data, false)}
+    </div>`;
+  }
+
+  area.innerHTML = html;
+  area.style.display = 'block';
+}
+
+function renderTimeline(data, semuaDone) {
+  let html = '<div class="timeline">';
+  for (let i = 0; i < 5; i++) {
+    const tahap = tahapInfo[i];
+    const no = i + 1;
+    const isDone = semuaDone || no < data.tahapAktif;
+    const isCurrent = !semuaDone && no === data.tahapAktif;
+    const isPending = !semuaDone && no > data.tahapAktif;
+
+    const dotClass = isDone ? 'done' : isCurrent ? 'current' : 'pending';
+    const dotLabel = isDone ? '✓' : no;
+    const lineClass = isDone ? 'done' : 'dashed';
+    const labelClass = isPending ? 'muted' : '';
+    const isLast = i === 4;
+
+    let chipHtml = '';
+    if (isDone) chipHtml = `<span class="chip chip-done">Selesai</span>`;
+    else if (isCurrent) chipHtml = `<span class="chip chip-current">Sedang Berjalan</span>`;
+    else chipHtml = `<span class="chip chip-pending">Menunggu</span>`;
+
+    const tgl = tahap.tanggal[data.nomor];
+    let desc = '';
+    if (isDone) desc = (tgl ? tgl + ' — ' : '') + tahap.deskDone;
+    else if (isCurrent) desc = deskAktif[no];
+    else desc = 'Menunggu tahap sebelumnya selesai.';
+
+    html += `
+    <div class="tl-step">
+      <div class="tl-left">
+        <div class="tl-dot ${dotClass}">${dotLabel}</div>
+        ${!isLast ? `<div class="tl-line ${lineClass}"></div>` : ''}
+      </div>
+      <div class="tl-right">
+        <div class="tl-label ${labelClass}">${tahap.label} ${chipHtml}</div>
+        <div class="tl-desc">${desc}</div>
+      </div>
+    </div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(name) {
+  document.querySelectorAll('.halaman').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = document.querySelectorAll('.tab-item');
+  const map = { pengajuan: 0, pendaftaran: 1, tracking: 2 };
+  tabs[map[name]].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// DROPDOWN NAMA RI
+const namaRI = {
+  'Masjid': ['Masjid Al-Hikmah', 'Masjid Nurul Iman', 'Masjid Baitul Makmur', 'Masjid Al-Ikhlas'],
+  'Mushola': ['Mushola An-Nur', 'Mushola Al-Falah', 'Mushola Baiturrahman'],
+  'Gereja Protestan': ['GPIB Immanuel Depok', 'GKI Depok', 'Gereja Bethel Depok'],
+  'Gereja Katolik': ['Paroki St. Antonius Depok', 'Paroki St. Yohanes Depok'],
+  'Pura': ['Pura Agung Sari', 'Pura Jagatnatha Depok'],
+  'Klenteng': ['Klenteng Hok Tek Bio Depok', 'Klenteng Dhanagun Depok'],
+  'Vihara': ['Vihara Dhamma Sakya Depok', 'Vihara Depok Indah']
+};
+function updateNamaRI(jenis) {
+  const sel = document.getElementById('dropdown-nama-ri');
+  if (!jenis || !namaRI[jenis]) {
+    sel.innerHTML = '<option value="">-- Pilih jenis rumah ibadah terlebih dahulu --</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">-- Pilih nama rumah ibadah --</option>';
+  namaRI[jenis].forEach(nama => {
+    const opt = document.createElement('option');
+    opt.value = nama; opt.textContent = nama;
+    sel.appendChild(opt);
+  });
+}
+
+// DROPDOWN KELURAHAN
+const kelurahan = {
+  'beji': ['Beji', 'Beji Timur', 'Kemiri Muka', 'Kukusan', 'Pondok Cina', 'Tanah Baru'],
+  'bojongsari': ['Bojongsari', 'Bojongsari Baru', 'Duren Mekar', 'Duren Seribu', 'Pondok Jaya', 'Serua', 'Curug'],
+  'cilodong': ['Cilodong', 'Jatimulya', 'Kalibaru', 'Kalimulya', 'Sukamaju'],
+  'cimanggis': ['Cimanggis', 'Cisalak', 'Harjamukti', 'Mekarsari', 'Pabuaran', 'Tugu'],
+  'cinere': ['Cinere', 'Gandul', 'Pangkalan Jati', 'Pangkalan Jati Baru'],
+  'cipayung': ['Cipayung', 'Cipayung Jaya', 'Bojong Pondok Terong', 'Pondok Jaya', 'Ratujaya'],
+  'limo': ['Grogol', 'Krukut', 'Limo', 'Meruyung'],
+  'pancoran-mas': ['Depok', 'Depok Jaya', 'Mampang', 'Pancoran Mas', 'Rangkapan Jaya', 'Rangkapan Jaya Baru'],
+  'sawangan': ['Bedahan', 'Cinangka', 'Kedaung', 'Pasir Putih', 'Pengasinan', 'Sawangan', 'Sawangan Baru'],
+  'sukmajaya': ['Abadijaya', 'Baktijaya', 'Cisalak Pasar', 'Mekarjaya', 'Sukmajaya', 'Tirtajaya'],
+  'tapos': ['Cimpaeun', 'Cilangkap', 'Jatijajar', 'Leuwinanggung', 'Sukatani', 'Sukamaju Baru', 'Tapos']
+};
+function updateKelurahan(kec) {
+  const sel = document.getElementById('sel-kelurahan');
+  if (!kec || !kelurahan[kec]) {
+    sel.innerHTML = '<option value="">-- Pilih kecamatan terlebih dahulu --</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">-- Pilih kelurahan --</option>';
+  kelurahan[kec].forEach(kel => {
+    const opt = document.createElement('option');
+    opt.value = kel; opt.textContent = kel;
+    sel.appendChild(opt);
+  });
+}
+
+// KIRIM PENDAFTARAN
+function kirimPendaftaran() {
+  document.getElementById('form-daftar').style.display = 'none';
+  document.getElementById('state-menunggu').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+// ISI NOMOR DARI CHIP
+function isiNomor(nomor) {
+  document.getElementById('input-nomor').value = nomor;
+  cariPengajuan();
+}
+
+// CARI PENGAJUAN
+function cariPengajuan() {
+  const input = document.getElementById('input-nomor').value.trim().toUpperCase();
+  const errEl = document.getElementById('pesan-error');
+  const area = document.getElementById('area-hasil');
+  errEl.style.display = 'none';
+  area.style.display = 'none';
+  area.innerHTML = '';
+
+  if (!input) {
+    errEl.textContent = 'Masukkan nomor pengajuan terlebih dahulu.';
+    errEl.style.display = 'block';
+    return;
+  }
+  const data = dataPengajuan[input];
+  if (!data) {
+    errEl.textContent = 'Nomor pengajuan tidak ditemukan. Pastikan nomor sudah benar.';
+    errEl.style.display = 'block';
+    return;
+  }
+  renderHasil(data);
+  area.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Enter key
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('input-nomor').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') cariPengajuan();
+  });
+});
+</script>
+</body>
+</html>

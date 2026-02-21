@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIMBAH Pengurus – Login</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  /* ===== AUTH PENGURUS – Simple & Friendly ===== */
+  .auth-page {
+    min-height: 100vh;
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .auth-container {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* Top branding bar */
+  .auth-brand {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .auth-brand .logo-box {
+    width: 60px; height: 60px;
+    background: var(--green);
+    border-radius: 16px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 16px rgba(26,107,74,0.2);
+  }
+  .auth-brand h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--gray-800);
+  }
+  .auth-brand p {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+
+  /* Main card */
+  .auth-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  .card-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+  }
+  .card-subtitle {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 7px;
+  }
+  .form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray-800);
+    background: var(--gray-50);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-control:focus {
+    outline: none;
+    border-color: var(--green);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(26,107,74,0.08);
+  }
+  .form-control::placeholder { color: var(--gray-400); }
+
+  .forgot-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -10px;
+    margin-bottom: 18px;
+  }
+  .forgot-link {
+    font-size: 12px;
+    color: var(--green);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .forgot-link:hover { text-decoration: underline; }
+
+  .btn-auth {
+    width: 100%;
+    padding: 14px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-auth:hover { background: var(--green-mid); }
+
+  /* Register link area */
+  .register-area {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+    text-align: center;
+  }
+  .register-area p {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 10px;
+  }
+  .btn-register {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    background: var(--green-light);
+    color: var(--green);
+    border: 1.5px solid rgba(26,107,74,0.25);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.15s;
+  }
+  .btn-register:hover { background: #d8f0e6; }
+
+  /* Portal switch */
+  .portal-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--gray-400);
+  }
+  .portal-switch a {
+    color: var(--gray-600);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .portal-switch a:hover { color: var(--green); }
+
+  /* ===== FORGOT PANEL ===== */
+  .forgot-panel { display: none; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--gray-400);
+    cursor: pointer;
+    background: none; border: none;
+    padding: 0; margin-bottom: 20px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .back-btn:hover { color: var(--green); }
+
+  .success-state {
+    display: none;
+    text-align: center;
+    padding: 16px 0;
+  }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: var(--green-light);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  .success-state h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 8px;
+  }
+  .success-state p {
+    font-size: 13px; color: var(--gray-400);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .help-text {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- WIREFRAME NAV -->
+<div class="page-switcher">
+  <span>📐 WIREFRAME</span>
+  </div>
+
+<div style="padding-top:48px;">
+<div class="auth-page">
+  <div class="auth-container">
+
+    <!-- Brand Header -->
+    <div class="auth-brand">
+      <div class="logo-box">🕌</div>
+      <h1>SIMBAH</h1>
+      <p>Portal Pengurus Rumah Ibadah</p>
+    </div>
+
+    <!-- LOGIN CARD -->
+    <div id="login-card" class="auth-card">
+      <div class="card-title">Masuk ke Akun Anda</div>
+      <div class="card-subtitle">Kelola data rumah ibadah dan pantau status pendaftaran.</div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" type="email" placeholder="Masukkan email Anda">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" placeholder="Masukkan password">
+      </div>
+
+      <div class="forgot-row">
+        <span class="forgot-link" onclick="showForgot()">Lupa password?</span>
+      </div>
+
+      <button class="btn-auth" onclick="window.location='../pengurus.html'">
+        Masuk
+      </button>
+
+      <div class="register-area">
+        <p>Belum punya akun?</p>
+        <a href="register.html" class="btn-register">Daftar Sekarang</a>
+      </div>
+    </div>
+
+    <!-- FORGOT PASSWORD CARD -->
+    <div id="forgot-card" class="auth-card forgot-panel">
+      <button class="back-btn" onclick="showLogin()">← Kembali ke login</button>
+
+      <!-- Step 1: Input -->
+      <div id="forgot-step1">
+        <div class="card-title">Lupa Password?</div>
+        <div class="card-subtitle" style="margin-bottom:24px;">
+          Masukkan email yang Anda pakai saat daftar. Kami akan kirimkan tautan untuk reset password.
+        </div>
+
+        <div class="form-group">
+          <label>Email terdaftar</label>
+          <input class="form-control" type="email" placeholder="Masukkan email Anda">
+        </div>
+
+        <button class="btn-auth" onclick="showForgotSuccess()">
+          Kirim Tautan Reset
+        </button>
+
+        <p class="help-text">
+          Lupa email yang dipakai? Hubungi kami di<br>
+          <strong style="color:var(--gray-600);">simbah@pemda.go.id</strong>
+        </p>
+      </div>
+
+      <!-- Step 2: Success -->
+      <div id="forgot-success" class="success-state">
+        <div class="success-icon">✉️</div>
+        <h3>Email terkirim!</h3>
+        <p>Tautan reset password sudah dikirim ke email Anda. Silakan cek kotak masuk (atau folder spam) dan ikuti instruksinya.</p>
+        <button class="btn-auth" onclick="showLogin()">Kembali ke Login</button>
+      </div>
+    </div>
+
+    <!-- Portal switch -->
+    <div class="portal-switch">
+      Petugas / Pemda? <a href="../simbah/login.html">Login di portal Pemda →</a>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+function showForgot() {
+  document.getElementById('login-card').style.display = 'none';
+  document.getElementById('forgot-card').style.display = 'block';
+}
+function showLogin() {
+  document.getElementById('login-card').style.display = 'block';
+  document.getElementById('forgot-card').style.display = 'none';
+  document.getElementById('forgot-step1').style.display = 'block';
+  document.getElementById('forgot-success').style.display = 'none';
+}
+function showForgotSuccess() {
+  document.getElementById('forgot-step1').style.display = 'none';
+  document.getElementById('forgot-success').style.display = 'block';
+  document.getElementById('forgot-success').style.display = 'block';
+}
+</script>
+
+</body>
+</html>

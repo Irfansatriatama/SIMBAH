@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIMBAH – Laporan</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .pemda-layout { display: flex; min-height: 100vh; padding-top: 44px; }
+  .sidebar { width: 220px; background: var(--gray-800); color: white; display: flex; flex-direction: column; position: fixed; top: 44px; left: 0; bottom: 0; z-index: 100; }
+  .sidebar-logo { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .sidebar-logo .logo-brand { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 0.5px; }
+  .sidebar-logo .logo-sub { font-size: 10px; opacity: 0.45; margin-top: 3px; }
+  .sidebar-nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+  .nav-item { display: flex; align-items: center; padding: 9px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.15s; text-decoration: none; margin-bottom: 1px; }
+  .nav-item:hover { background: rgba(255,255,255,0.07); color: white; }
+  .nav-item.active { background: var(--green); color: white; font-weight: 700; }
+  .nav-badge { margin-left: auto; background: var(--red); color: white; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .sidebar-footer { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .sidebar-user { display: flex; align-items: center; gap: 10px; }
+  .sidebar-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; flex-shrink: 0; }
+  .sidebar-user-name { font-size: 13px; font-weight: 700; color: white; }
+  .sidebar-user-role { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+  .main-content { margin-left: 220px; flex: 1; background: var(--gray-100); padding: 28px; min-height: calc(100vh - 44px); }
+  .page-header { margin-bottom: 28px; }
+  .breadcrumb { font-size: 12px; color: var(--gray-400); margin-bottom: 8px; }
+  .breadcrumb span { color: var(--gray-600); }
+  .page-header h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 800; color: var(--gray-800); margin-bottom: 4px; }
+  .page-header p { font-size: 14px; color: var(--gray-400); }
+
+  /* FILTER PERIODE */
+  .filter-card { background: white; border-radius: 14px; border: 1px solid var(--gray-200); padding: 20px 22px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .filter-card-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--gray-600); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .filter-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .filter-select { padding: 10px 30px 10px 12px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--gray-700); outline: none; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%2398a2b3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-color: white; }
+  .btn-apply { background: var(--green); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s; }
+  .btn-apply:hover { background: var(--green-mid); }
+
+  /* STAT GRID */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: white; border-radius: 14px; border: 1px solid var(--gray-200); padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .stat-label { font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 8px; }
+  .stat-val { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: var(--gray-800); margin-bottom: 4px; }
+  .stat-sub { font-size: 12px; color: var(--gray-400); }
+  .stat-card.highlight { border-left: 3px solid var(--green); }
+
+  /* EXPORT BUTTONS */
+  .export-row { display: flex; gap: 10px; margin-bottom: 20px; }
+  .btn-export { display: flex; align-items: center; gap: 8px; background: white; color: var(--gray-700); border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s; }
+  .btn-export:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
+  .btn-export.primary { background: var(--green); color: white; border-color: var(--green); }
+  .btn-export.primary:hover { background: var(--green-mid); }
+
+  /* TABLE */
+  .table-card { background: white; border-radius: 14px; border: 1px solid var(--gray-200); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .table-card-header { padding: 18px 22px; border-bottom: 1px solid var(--gray-100); }
+  .table-card-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: var(--gray-800); }
+  .table-card-sub { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: var(--gray-50); padding: 12px 18px; text-align: left; font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Plus Jakarta Sans', sans-serif; border-bottom: 1px solid var(--gray-100); white-space: nowrap; }
+  tbody td { padding: 14px 18px; border-bottom: 1px solid var(--gray-100); font-size: 14px; color: var(--gray-700); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--gray-50); }
+  .td-name { font-weight: 600; color: var(--gray-800); }
+  .td-name-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-yellow { background: var(--accent-soft); color: #a16207; }
+  .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+  .amount { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: var(--gray-800); }
+</style>
+</head>
+<body>
+
+<div class="page-switcher">
+  <span>📐 WIREFRAME</span>
+</div>
+
+<div class="pemda-layout">
+
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-brand">SIMBAH</div>
+      <div class="logo-sub">Kota Bogor · 2025</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="../dashboard.html">Dashboard</a>
+      <a class="nav-item" href="data-ri.html">Data Rumah Ibadah</a>
+      <a class="nav-item" href="verifikasi.html">Verifikasi <span class="nav-badge">7</span></a>
+      <a class="nav-item" href="anggaran.html">Anggaran</a>
+      <a class="nav-item active" href="laporan.html">Laporan</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">BD</div>
+        <div>
+          <div class="sidebar-user-name">Budi Darma</div>
+          <div class="sidebar-user-role">Admin Pemda</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <div class="page-header">
+      <div class="breadcrumb">Dashboard <span>/ Laporan</span></div>
+      <h1>Laporan</h1>
+      <p>Ringkasan statistik dan data rumah ibadah serta bantuan berdasarkan periode.</p>
+    </div>
+
+    <!-- FILTER PERIODE -->
+    <div class="filter-card">
+      <div class="filter-card-title">Pilih Periode</div>
+      <div class="filter-row">
+        <select class="filter-select">
+          <option>Tahun 2025</option>
+          <option>Tahun 2024</option>
+          <option>Tahun 2023</option>
+        </select>
+        <select class="filter-select">
+          <option value="">Semua Bulan</option>
+          <option>Januari</option>
+          <option>Februari</option>
+          <option>Maret</option>
+          <option>April</option>
+          <option>Mei</option>
+          <option>Juni</option>
+          <option>Juli</option>
+          <option>Agustus</option>
+          <option>September</option>
+          <option>Oktober</option>
+          <option>November</option>
+          <option>Desember</option>
+        </select>
+        <select class="filter-select">
+          <option value="">Semua Kecamatan</option>
+          <option>Bogor Tengah</option>
+          <option>Bogor Barat</option>
+          <option>Bogor Timur</option>
+          <option>Bogor Selatan</option>
+          <option>Bogor Utara</option>
+          <option>Tanah Sareal</option>
+        </select>
+        <button class="btn-apply">Tampilkan</button>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid">
+      <div class="stat-card highlight">
+        <div class="stat-label">Total RI Tercatat</div>
+        <div class="stat-val">124</div>
+        <div class="stat-sub">+12 dibanding 2024</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">RI Baru Terdaftar</div>
+        <div class="stat-val">18</div>
+        <div class="stat-sub">Periode Jan–Mei 2025</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Bantuan Disalurkan</div>
+        <div class="stat-val">32</div>
+        <div class="stat-sub">Rumah ibadah</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Anggaran Terserap</div>
+        <div class="stat-val">Rp 1,7 M</div>
+        <div class="stat-sub">72% dari APBD</div>
+      </div>
+    </div>
+
+    <!-- EXPORT BUTTONS -->
+    <div class="export-row">
+      <button class="btn-export primary">Ekspor ke Excel</button>
+      <button class="btn-export">Ekspor ke PDF</button>
+      <button class="btn-export">Cetak Laporan</button>
+    </div>
+
+    <!-- TABEL DATA -->
+    <div class="table-card">
+      <div class="table-card-header">
+        <div class="table-card-title">Rekap Bantuan per Rumah Ibadah — 2025</div>
+        <div class="table-card-sub">Data dapat diekspor ke Excel atau PDF</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Rumah Ibadah</th>
+            <th>Kecamatan</th>
+            <th>Jenis</th>
+            <th>Jenis Bantuan</th>
+            <th>Jumlah Bantuan (Rp)</th>
+            <th>Tanggal Cair</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="td-name">Masjid Al-Ikhlas</div></td>
+            <td>Bogor Tengah</td>
+            <td>Masjid</td>
+            <td>Renovasi</td>
+            <td class="amount">150.000.000</td>
+            <td>20 Jan 2025</td>
+            <td><span class="badge badge-green">Selesai</span></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Gereja GPIB Imanuel</div></td>
+            <td>Bogor Tengah</td>
+            <td>Gereja</td>
+            <td>Renovasi</td>
+            <td class="amount">120.000.000</td>
+            <td>05 Feb 2025</td>
+            <td><span class="badge badge-green">Selesai</span></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Masjid Ar-Rahman</div></td>
+            <td>Bogor Barat</td>
+            <td>Masjid</td>
+            <td>Pembangunan</td>
+            <td class="amount">250.000.000</td>
+            <td>—</td>
+            <td><span class="badge badge-yellow">Dalam Proses</span></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Klenteng Hok Tek Bio</div></td>
+            <td>Bogor Tengah</td>
+            <td>Klenteng</td>
+            <td>Renovasi</td>
+            <td class="amount">75.000.000</td>
+            <td>15 Mar 2025</td>
+            <td><span class="badge badge-green">Selesai</span></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Vihara Dharmakaya</div></td>
+            <td>Bogor Timur</td>
+            <td>Vihara</td>
+            <td>Pembangunan</td>
+            <td class="amount">180.000.000</td>
+            <td>—</td>
+            <td><span class="badge badge-yellow">Dalam Proses</span></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Mushola Al-Hikmah</div></td>
+            <td>Bogor Utara</td>
+            <td>Mushola</td>
+            <td>Pembangunan</td>
+            <td class="amount">200.000.000</td>
+            <td>—</td>
+            <td><span class="badge badge-gray">Menunggu</span></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Pura Parahyangan</div></td>
+            <td>Bogor Selatan</td>
+            <td>Pura</td>
+            <td>Renovasi</td>
+            <td class="amount">90.000.000</td>
+            <td>—</td>
+            <td><span class="badge badge-gray">Menunggu</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
