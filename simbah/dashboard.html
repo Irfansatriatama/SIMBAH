@@ -12,20 +12,11 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: var(--gray-600); }
 
-/* ===== PAGE SWITCHER ===== */
-.page-switcher {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
-  background: #0f1923; padding: 0 16px; height: 44px;
-  display: flex; align-items: center; gap: 6px; overflow-x: auto;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.page-switcher > span { font-size: 10px; color: #98a2b3; font-weight: 700; margin-right: 8px; white-space: nowrap; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px; text-transform: uppercase; }
-
 /* ===== LAYOUT ===== */
-.pemda-layout { display: flex; min-height: 100vh; padding-top: 44px; }
+.pemda-layout { display: flex; min-height: 100vh; }
 
 /* ===== SIDEBAR ===== */
-.sidebar { width: 220px; background: var(--gray-800); color: white; display: flex; flex-direction: column; position: fixed; top: 44px; left: 0; bottom: 0; z-index: 100; }
+.sidebar { height: 100%;width: 220px; background: var(--gray-800); color: white; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; }
 .sidebar-logo { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .sidebar-logo .logo-brand { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 0.5px; }
 .sidebar-logo .logo-sub { font-size: 10px; opacity: 0.45; margin-top: 3px; }
@@ -43,11 +34,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: v
 .btn-keluar:hover { color: var(--red); }
 
 /* ===== MAIN CONTENT ===== */
-.main-content { margin-left: 220px; flex: 1; background: var(--gray-100); padding: 28px; min-height: calc(100vh - 44px); }
+.main-content { margin-left: 220px; flex: 1; background: var(--gray-100); padding: 28px; min-height: 100vh; }
 .breadcrumb { font-size: 12px; color: var(--gray-400); margin-bottom: 8px; }
 .breadcrumb span { color: var(--gray-600); }
 
-/* ===== PAGE HEADER WITH DATE FILTER ===== */
+/* ===== PAGE HEADER ===== */
 .page-header-row {
   display: flex; align-items: flex-start; justify-content: space-between;
   margin-bottom: 20px; gap: 16px; flex-wrap: wrap;
@@ -61,38 +52,19 @@ body { font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: v
   border-radius: 10px; padding: 8px 14px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04); flex-shrink: 0;
 }
-.date-filter-label {
-  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700;
-  color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
-}
+.date-filter-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
 .date-filter-sep { font-size: 12px; color: var(--gray-400); }
-.date-input {
-  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--gray-800);
-  border: 1px solid var(--gray-200); border-radius: 6px; padding: 5px 8px; background: var(--gray-50);
-  outline: none; cursor: pointer; transition: border-color 0.15s;
-}
+.date-input { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--gray-800); border: 1px solid var(--gray-200); border-radius: 6px; padding: 5px 8px; background: var(--gray-50); outline: none; cursor: pointer; transition: border-color 0.15s; }
 .date-input:hover, .date-input:focus { border-color: var(--green); }
 .date-filter-divider { width: 1px; height: 18px; background: var(--gray-200); }
-.btn-filter-apply {
-  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700;
-  color: white; background: var(--green); border: none; border-radius: 6px;
-  padding: 5px 12px; cursor: pointer; transition: background 0.15s; white-space: nowrap;
-}
+.btn-filter-apply { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; color: white; background: var(--green); border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
 .btn-filter-apply:hover { background: var(--green-mid); }
-.btn-filter-reset {
-  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600;
-  color: var(--gray-400); background: transparent; border: 1px solid var(--gray-200);
-  border-radius: 6px; padding: 5px 10px; cursor: pointer; transition: all 0.15s;
-}
+.btn-filter-reset { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--gray-400); background: transparent; border: 1px solid var(--gray-200); border-radius: 6px; padding: 5px 10px; cursor: pointer; transition: all 0.15s; }
 .btn-filter-reset:hover { border-color: var(--gray-400); color: var(--gray-600); }
-.filter-active-badge {
-  display: none; align-items: center; gap: 4px;
-  background: var(--green-light); border: 1px solid #b3dcc9; border-radius: 12px; padding: 2px 8px;
-  font-size: 11px; font-weight: 600; color: var(--green); font-family: 'Plus Jakarta Sans', sans-serif;
-}
+.filter-active-badge { display: none; align-items: center; gap: 4px; background: var(--green-light); border: 1px solid #b3dcc9; border-radius: 12px; padding: 2px 8px; font-size: 11px; font-weight: 600; color: var(--green); font-family: 'Plus Jakarta Sans', sans-serif; }
 .filter-active-badge.show { display: flex; }
 
-/* ===== ATURAN BANNER ===== */
+/* ===== BANNER ===== */
 .aturan-banner { background: var(--blue-soft); border: 1px solid #c3d9ff; border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #2558b0; line-height: 1.5; }
 .aturan-banner strong { font-weight: 700; }
 
@@ -118,42 +90,42 @@ body { font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: v
 .chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; gap: 10px; }
 .chart-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
 .chart-sub { font-size: 12px; color: var(--gray-400); }
-.chart-filter-select {
-  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600;
-  color: var(--gray-600); background: var(--gray-50); border: 1px solid var(--gray-200);
-  border-radius: 6px; padding: 5px 10px; cursor: pointer; outline: none; transition: border-color 0.15s; flex-shrink: 0;
-}
+.chart-filter-select { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--gray-600); background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; padding: 5px 10px; cursor: pointer; outline: none; transition: border-color 0.15s; flex-shrink: 0; }
 .chart-filter-select:hover, .chart-filter-select:focus { border-color: var(--green); color: var(--green); }
 
-/* ===== PERTUMBUHAN IMPROVED ===== */
-.pstat-strip { display: flex; gap: 0; margin: 12px 0 16px; border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
-.pstat-item { flex: 1; padding: 12px 14px; border-right: 1px solid var(--gray-200); }
+/* ===== PERTUMBUHAN – LINE CHART ===== */
+.pstat-strip { display: flex; gap: 0; margin: 14px 0 16px; border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
+.pstat-item { flex: 1; padding: 11px 14px; border-right: 1px solid var(--gray-200); }
 .pstat-item:last-child { border-right: none; }
 .pstat-val { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: var(--gray-800); margin-bottom: 2px; }
 .pstat-val.up { color: var(--green); }
 .pstat-label { font-size: 10px; color: var(--gray-400); font-weight: 500; }
 
-.pertumbuhan-chart-wrap { position: relative; width: 100%; }
-.pertumbuhan-svg { width: 100%; height: 165px; display: block; overflow: visible; cursor: crosshair; }
+.linechart-wrap {
+  position: relative; width: 100%;
+}
+.linechart-canvas {
+  width: 100%; height: 180px; display: block; overflow: visible;
+}
 
+/* Tooltip */
 .chart-tooltip {
   position: absolute; pointer-events: none; z-index: 20;
-  background: var(--gray-800); color: white; border-radius: 8px; padding: 9px 13px;
+  background: var(--gray-800); color: white; border-radius: 8px; padding: 10px 14px;
   font-size: 12px; font-family: 'DM Sans', sans-serif;
   box-shadow: 0 6px 20px rgba(0,0,0,0.25); opacity: 0; transition: opacity 0.1s;
-  white-space: nowrap; min-width: 150px;
+  white-space: nowrap; min-width: 160px;
 }
 .chart-tooltip.show { opacity: 1; }
-.tooltip-month { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.45); margin-bottom: 7px; letter-spacing: 0.3px; text-transform: uppercase; }
+.tooltip-month { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.45); margin-bottom: 8px; letter-spacing: 0.3px; text-transform: uppercase; }
 .tooltip-row { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
 .tooltip-row:last-child { margin-bottom: 0; }
 .tooltip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .tooltip-lbl { flex: 1; font-size: 12px; color: rgba(255,255,255,0.65); }
 .tooltip-num { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 12px; }
 .tooltip-divider { height: 1px; background: rgba(255,255,255,0.12); margin: 5px 0; }
-.crosshair-line { position: absolute; top: 0; width: 1px; background: var(--gray-300); pointer-events: none; opacity: 0; transition: opacity 0.1s; }
-.crosshair-line.show { opacity: 1; }
 
+/* Legend chips */
 .plegend-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--gray-100); }
 .plegend-chip {
   display: flex; align-items: center; gap: 5px;
@@ -162,10 +134,18 @@ body { font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: v
   padding: 3px 10px 3px 7px; cursor: pointer; transition: all 0.15s; user-select: none;
 }
 .plegend-chip:hover { border-color: var(--gray-400); }
-.plegend-chip.dimmed { opacity: 0.3; }
+.plegend-chip.dimmed { opacity: 0.35; }
 .plegend-chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .plegend-chip-name { font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; }
 .plegend-chip-num { color: var(--gray-400); margin-left: 2px; }
+
+/* Month indicator line */
+.month-line {
+  position: absolute; top: 0; width: 1px;
+  background: var(--gray-300); pointer-events: none;
+  opacity: 0; transition: opacity 0.08s;
+}
+.month-line.show { opacity: 1; }
 
 /* ===== BAR CHART ===== */
 .bar-chart-mock { display: flex; align-items: flex-end; gap: 8px; height: 120px; margin-top: 10px; }
@@ -213,19 +193,53 @@ tbody tr:hover { background: var(--gray-50); }
 .dot-green { background: var(--green); }
 .dot-yellow { background: var(--accent); }
 .dot-red { background: var(--red); }
+
+/* ===== USER ACTION MENU ===== */
+.sidebar-user-wrap { position: relative; }
+.sidebar-user { display: flex; align-items: center; gap: 10px; }
+.btn-user-menu {
+  margin-left: auto; flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: transparent; border: none;
+  border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.btn-user-menu:hover { background: rgba(255,255,255,0.1); }
+.btn-user-menu svg { display: block; }
+
+.user-dropdown {
+  display: none;
+  position: absolute; bottom: calc(100% + 8px); left: 0; right: 0;
+  background: #263244; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  z-index: 200;
+}
+.user-dropdown.open { display: block; }
+.user-dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.75); cursor: pointer;
+  transition: background 0.12s;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.user-dropdown-item:last-child { border-bottom: none; }
+.user-dropdown-item:hover { background: rgba(255,255,255,0.07); color: white; }
+.user-dropdown-item.danger { color: #f87171; }
+.user-dropdown-item.danger:hover { background: rgba(248,113,113,0.1); }
+.user-dropdown-icon {
+  width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7;
+}
 </style>
 </head>
 <body>
-
-<div class="page-switcher">
-  <span>Wireframe</span>
-</div>
 
 <div class="pemda-layout">
   <div class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-brand">SIMBAH</div>
-      <div class="logo-sub">Kota Bogor · 2025</div>
+      <div class="logo-sub">Kota Bogor &middot; 2025</div>
     </div>
     <nav class="sidebar-nav">
       <a class="nav-item active" href="dashboard.html">Dashboard</a>
@@ -235,21 +249,52 @@ tbody tr:hover { background: var(--gray-50); }
       <a class="nav-item" href="pemda/laporan.html">Laporan</a>
     </nav>
     <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="sidebar-avatar">BD</div>
-        <div>
-          <div class="sidebar-user-name">Budi Darma</div>
-          <div class="sidebar-user-role">Admin Pemda</div>
+      <div class="sidebar-user-wrap">
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-dropdown-item" onclick="closeUserMenu()">
+            <svg class="user-dropdown-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Profil Saya
+          </div>
+          <div class="user-dropdown-item" onclick="closeUserMenu()">
+            <svg class="user-dropdown-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Ganti Password
+          </div>
+          <div class="user-dropdown-item danger" onclick="closeUserMenu()">
+            <svg class="user-dropdown-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M10 11l3-3-3-3M13 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Keluar
+          </div>
+        </div>
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">BD</div>
+          <div style="flex:1;min-width:0;">
+            <div class="sidebar-user-name">Budi Darma</div>
+            <div class="sidebar-user-role">Admin Pemda</div>
+          </div>
+          <button class="btn-user-menu" id="btnUserMenu" onclick="toggleUserMenu(event)" title="Menu akun">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="3" r="1.2" fill="rgba(255,255,255,0.6)"/>
+              <circle cx="8" cy="8" r="1.2" fill="rgba(255,255,255,0.6)"/>
+              <circle cx="8" cy="13" r="1.2" fill="rgba(255,255,255,0.6)"/>
+            </svg>
+          </button>
         </div>
       </div>
-      <span class="btn-keluar">Keluar dari akun</span>
     </div>
   </div>
 
   <div class="main-content">
     <div class="breadcrumb">Beranda <span>/ Dashboard</span></div>
 
-    <!-- PAGE HEADER + GLOBAL DATE FILTER -->
+    <!-- PAGE HEADER + DATE FILTER -->
     <div class="page-header-row">
       <div class="page-header-text">
         <h1>Dashboard Pemda</h1>
@@ -267,7 +312,7 @@ tbody tr:hover { background: var(--gray-50); }
       </div>
     </div>
 
-    <!-- ATURAN -->
+    <!-- BANNER -->
     <div class="aturan-banner">
       <strong>Kebijakan Bantuan:</strong> Setiap rumah ibadah hanya dapat menerima bantuan pembangunan atau renovasi <strong>satu kali dalam satu tahun anggaran</strong>. Pengajuan kedua dari RI yang sama pada tahun yang sama akan ditolak otomatis.
     </div>
@@ -299,7 +344,7 @@ tbody tr:hover { background: var(--gray-50); }
     <!-- CHARTS ROW -->
     <div class="charts-row">
 
-      <!-- CHART: Pertumbuhan (improved) -->
+      <!-- LINE CHART: Pertumbuhan RI Terdaftar -->
       <div class="chart-card">
         <div class="chart-header">
           <div>
@@ -320,18 +365,18 @@ tbody tr:hover { background: var(--gray-50); }
         <!-- KPI Strip -->
         <div class="pstat-strip" id="pertStats"></div>
 
-        <!-- Chart -->
-        <div class="pertumbuhan-chart-wrap" id="pertWrap">
-          <svg class="pertumbuhan-svg" id="svgPert" viewBox="0 0 560 165" preserveAspectRatio="none"></svg>
-          <div class="crosshair-line" id="crosshair"></div>
+        <!-- Line chart SVG -->
+        <div class="linechart-wrap" id="pertWrap">
+          <svg class="linechart-canvas" id="svgPert" viewBox="0 0 560 180" preserveAspectRatio="none"></svg>
+          <div class="month-line" id="monthLine"></div>
           <div class="chart-tooltip" id="tooltip"></div>
         </div>
 
-        <!-- Legend chips -->
+        <!-- Legend -->
         <div class="plegend-bar" id="pertLegend"></div>
       </div>
 
-      <!-- CHART: Bar Kecamatan -->
+      <!-- BAR CHART: Distribusi Kecamatan -->
       <div class="chart-card">
         <div class="chart-header">
           <div>
@@ -452,11 +497,11 @@ const DATES  = ['2024-01-15','2024-02-15','2024-03-15','2024-04-15','2024-05-15'
                  '2024-07-15','2024-08-15','2024-09-15','2024-10-15','2024-11-15','2024-12-15'];
 
 const KEC_LABELS = ['Bgr Tengah','Bgr Barat','Bgr Utara','Bgr Selatan','Bgr Timur','T. Sareal'];
-const KEC_DATA   = {
+const KEC_DATA = {
   semua:[312,278,241,198,140,79], masjid:[118,105,92,75,53,20], mushola:[87,78,68,58,40,18],
   gereja:[52,46,40,33,23,6], pura:[25,22,20,16,11,7], klenteng:[13,11,9,7,5,6], vihara:[17,16,12,9,8,28]
 };
-const JENIS_DATA  = [
+const JENIS_DATA = [
   {label:'Masjid',val:463,color:'#1a6b4a'},{label:'Mushola',val:349,color:'#2d8f63'},
   {label:'Gereja',val:200,color:'#3a7bd5'},{label:'Pura',val:101,color:'#f0a500'},
   {label:'Vihara',val:84,color:'#7c5cbf'},{label:'Klenteng',val:51,color:'#e05252'},
@@ -475,69 +520,66 @@ function applyFilter() {
   const f = new Date(document.getElementById('dateFrom').value);
   const t = new Date(document.getElementById('dateTo').value);
   if (isNaN(f) || isNaN(t) || f > t) return;
-
-  let fi = 0, ti = 11;
-  DATES.forEach((d, i) => {
-    const dt = new Date(d);
-    if (dt >= f && (fi === 0 || dt < new Date(DATES[fi]))) fi = i;
-  });
-  fi = DATES.findIndex(d => new Date(d) >= f);
+  let fi = DATES.findIndex(d => new Date(d) >= f);
   if (fi < 0) fi = 0;
-  ti = 11;
+  let ti = 11;
   for (let i = 11; i >= 0; i--) { if (new Date(DATES[i]) <= t) { ti = i; break; } }
-
   range = { from: fi, to: ti };
   document.getElementById('filterBadge').classList.add('show');
   refreshAll();
 }
-
 function resetFilter() {
   document.getElementById('dateFrom').value = '2024-01-01';
-  document.getElementById('dateTo').value   = '2024-12-31';
+  document.getElementById('dateTo').value = '2024-12-31';
   range = { from: 0, to: 11 };
   document.getElementById('filterBadge').classList.remove('show');
   refreshAll();
 }
-
 function refreshAll() {
   updateStatCards();
   renderPert();
 }
-
 function updateStatCards() {
   const { from, to } = range;
-  const total    = SERIES.reduce((s, ser) => s + ser.data[to], 0);
+  const total = SERIES.reduce((s, ser) => s + ser.data[to], 0);
   const totalPrv = SERIES.reduce((s, ser) => s + ser.data[from], 0);
-  const delta    = total - totalPrv;
-  document.getElementById('statTotal').textContent      = total.toLocaleString('id-ID');
+  const delta = total - totalPrv;
+  document.getElementById('statTotal').textContent = total.toLocaleString('id-ID');
   document.getElementById('statTotalBadge').textContent = (delta >= 0 ? '+' : '') + delta + ' periode ini';
   document.getElementById('pertSub').textContent = `Kumulatif per bulan \u00B7 ${LABELS[from]} \u2013 ${LABELS[to]} 2024`;
 }
 
-// ===== PERTUMBUHAN CHART =====
+// ===== LINE CHART =====
 function getSlice(ser) { return ser.data.slice(range.from, range.to + 1); }
-function getTotals(activeKeys) {
-  const { from, to } = range;
-  return Array.from({ length: to - from + 1 }, (_, i) =>
-    SERIES.filter(s => activeKeys.includes(s.key)).reduce((sum, s) => sum + s.data[from + i], 0)
-  );
+
+function smoothPath(pts) {
+  if (pts.length < 2) return `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+  let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+  for (let i = 1; i < pts.length; i++) {
+    const cx = (pts[i-1][0] + pts[i][0]) / 2;
+    d += ` C${cx.toFixed(1)},${pts[i-1][1].toFixed(1)} ${cx.toFixed(1)},${pts[i][1].toFixed(1)} ${pts[i][0].toFixed(1)},${pts[i][1].toFixed(1)}`;
+  }
+  return d;
 }
 
 function renderPert() {
   const filterVal = document.getElementById('filterPert').value;
   const { from, to } = range;
-  const labels    = LABELS.slice(from, to + 1);
-  const n         = labels.length;
+  const labels = LABELS.slice(from, to + 1);
+  const n = labels.length;
 
   const activeSeries = filterVal === 'semua' ? SERIES : SERIES.filter(s => s.key === filterVal);
   const visibleSeries = activeSeries.filter(s => !hiddenKeys.has(s.key));
+  const drawSeries = visibleSeries.length ? visibleSeries : activeSeries;
 
-  const visibleKeys  = visibleSeries.map(s => s.key);
-  const totals       = getTotals(visibleKeys.length ? visibleKeys : activeSeries.map(s => s.key));
-  const lastVal      = totals[totals.length - 1] || 0;
-  const firstVal     = totals[0] || 0;
-  const delta        = lastVal - firstVal;
-  const pct          = firstVal > 0 ? ((delta / firstVal) * 100).toFixed(1) : '0.0';
+  // Totals for KPI
+  const totals = Array.from({ length: n }, (_, i) =>
+    drawSeries.reduce((sum, s) => sum + s.data[from + i], 0)
+  );
+  const lastVal = totals[totals.length - 1] || 0;
+  const firstVal = totals[0] || 0;
+  const delta = lastVal - firstVal;
+  const pct = firstVal > 0 ? ((delta / firstVal) * 100).toFixed(1) : '0.0';
 
   // KPI strip
   document.getElementById('pertStats').innerHTML = `
@@ -560,118 +602,79 @@ function renderPert() {
   `;
 
   // SVG dimensions
-  const W=560, H=165, PL=40, PR=12, PT=10, PB=24;
-  const cW = W-PL-PR, cH = H-PT-PB;
-  const xPos = i => PL + (n > 1 ? (i/(n-1)) : 0.5) * cW;
+  const W=560, H=180, PL=44, PR=14, PT=12, PB=26;
+  const cW = W - PL - PR, cH = H - PT - PB;
+  const xPos = i => PL + (n > 1 ? (i / (n-1)) : 0.5) * cW;
 
-  const allVals = visibleSeries.length
-    ? visibleSeries.flatMap(s => getSlice(s))
-    : activeSeries.flatMap(s => getSlice(s));
-  const maxV = Math.max(...totals, ...allVals) * 1.1;
-  const minV = Math.min(...totals, ...allVals) * 0.9;
-  const yPos = v => PT + cH - ((v - minV) / (maxV - minV || 1)) * cH;
+  const allVals = drawSeries.flatMap(s => getSlice(s));
+  let maxV = Math.max(...allVals);
+  let minV = Math.min(...allVals);
+  const pad = (maxV - minV) * 0.12 || 5;
+  maxV += pad; minV = Math.max(0, minV - pad);
+  const yPos = v => PT + cH - ((v - minV) / (maxV - minV)) * cH;
 
   let svg = '<defs>';
-  // Gradient per series
-  activeSeries.forEach(s => {
-    svg += `<linearGradient id="g_${s.key}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${s.color}" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="${s.color}" stop-opacity="0.04"/>
+  drawSeries.forEach(s => {
+    svg += `<linearGradient id="grad_${s.key}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${s.color}" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="${s.color}" stop-opacity="0.02"/>
     </linearGradient>`;
   });
   svg += '</defs>';
 
-  // Grid
-  for (let t = 0; t <= 4; t++) {
-    const v = minV + (t/4) * (maxV - minV);
+  // Grid lines + Y labels
+  const ticks = 4;
+  for (let t = 0; t <= ticks; t++) {
+    const v = minV + (t / ticks) * (maxV - minV);
     const y = yPos(v).toFixed(1);
-    svg += `<line x1="${PL}" y1="${y}" x2="${W-PR}" y2="${y}" stroke="#e4e7ec" stroke-width="1" ${t<4?'stroke-dasharray="3,3"':''}/>`;
-    const lbl = v >= 1000 ? (v/1000).toFixed(1)+'k' : Math.round(v).toString();
-    svg += `<text x="${PL-5}" y="${parseFloat(y)+4}" font-size="8" fill="#98a2b3" text-anchor="end" font-family="DM Sans">${lbl}</text>`;
+    const lbl = v >= 1000 ? (v/1000).toFixed(1) + 'k' : Math.round(v).toString();
+    svg += `<line x1="${PL}" y1="${y}" x2="${W-PR}" y2="${y}" stroke="#e4e7ec" stroke-width="1" stroke-dasharray="3,3"/>`;
+    svg += `<text x="${PL-6}" y="${parseFloat(y)+4}" font-size="8" fill="#98a2b3" text-anchor="end" font-family="DM Sans">${lbl}</text>`;
   }
 
   // X labels
   labels.forEach((lbl, i) => {
-    svg += `<text x="${xPos(i).toFixed(1)}" y="${H-3}" font-size="8" fill="#98a2b3" text-anchor="middle" font-family="DM Sans">${lbl}</text>`;
+    svg += `<text x="${xPos(i).toFixed(1)}" y="${H-4}" font-size="8" fill="#98a2b3" text-anchor="middle" font-family="DM Sans">${lbl}</text>`;
   });
 
-  if (filterVal === 'semua' && visibleSeries.length > 1) {
-    // Stacked area
-    let stackBottom = Array(n).fill(minV);
+  // Draw each series as a smooth line + area fill
+  drawSeries.forEach(s => {
+    const slice = getSlice(s);
+    const pts = slice.map((v, i) => [xPos(i), yPos(v)]);
+    const path = smoothPath(pts);
+    const lp = pts[pts.length - 1];
+    const fp = pts[0];
+    const area = `${path} L${lp[0].toFixed(1)},${(H-PB).toFixed(1)} L${fp[0].toFixed(1)},${(H-PB).toFixed(1)} Z`;
+    svg += `<path d="${area}" fill="url(#grad_${s.key})"/>`;
+    svg += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="${drawSeries.length === 1 ? 2.5 : 2}" stroke-linejoin="round" stroke-linecap="round"/>`;
 
-    visibleSeries.forEach(s => {
-      const slice = getSlice(s);
-      const tops  = slice.map((v, i) => stackBottom[i] + v);
-      const bots  = [...stackBottom];
-
-      const topPts = tops.map((v, i) => [xPos(i), yPos(v)]);
-      const botPts = bots.map((v, i) => [xPos(i), yPos(v)]);
-
-      const topPath = topPts.map((p,i) => (i===0?`M${p[0].toFixed(1)},${p[1].toFixed(1)}`:`L${p[0].toFixed(1)},${p[1].toFixed(1)}`)).join(' ');
-      const botPath = botPts.slice().reverse().map(p => `L${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
-      svg += `<path d="${topPath} ${botPath} Z" fill="${s.color}" opacity="0.78"/>`;
-      svg += `<path d="${topPath}" fill="none" stroke="${s.color}" stroke-width="1.5" opacity="0.9"/>`;
-
-      stackBottom = tops;
-    });
-
-    // Total outline dashed
-    const totalPts = totals.map((v, i) => [xPos(i), yPos(v)]);
-    const totalPath = totalPts.map((p,i) => (i===0?`M${p[0].toFixed(1)},${p[1].toFixed(1)}`:`L${p[0].toFixed(1)},${p[1].toFixed(1)}`)).join(' ');
-    svg += `<path d="${totalPath}" fill="none" stroke="#1d2939" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.35"/>`;
-
-    // Last point dot
-    const lp = totalPts[totalPts.length-1];
-    svg += `<circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="4" fill="white" stroke="#1d2939" stroke-width="2" opacity="0.5"/>`;
-
-  } else {
-    // Single smooth line
-    const ser   = visibleSeries[0] || activeSeries[0];
-    if (!ser) { document.getElementById('svgPert').innerHTML = svg; return; }
-    const slice = getSlice(ser);
-    const pts   = slice.map((v, i) => [xPos(i), yPos(v)]);
-
-    // Smooth path (cubic bezier)
-    function smoothPath(pts) {
-      if (pts.length < 2) return `M${pts[0][0]},${pts[0][1]}`;
-      let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
-      for (let i = 1; i < pts.length; i++) {
-        const px = pts[i-1], cx1 = (pts[i-1][0]+pts[i][0])/2;
-        d += ` C${cx1.toFixed(1)},${px[1].toFixed(1)} ${cx1.toFixed(1)},${pts[i][1].toFixed(1)} ${pts[i][0].toFixed(1)},${pts[i][1].toFixed(1)}`;
-      }
-      return d;
+    // Dots: only last + first, or all if single series with few points
+    if (drawSeries.length === 1) {
+      pts.forEach((p, i) => {
+        const isLast = i === pts.length - 1;
+        if (isLast) {
+          svg += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="5" fill="white" stroke="${s.color}" stroke-width="2.5"/>`;
+          svg += `<text x="${p[0].toFixed(1)}" y="${(p[1]-10).toFixed(1)}" font-size="9" font-weight="700" fill="${s.color}" text-anchor="middle" font-family="Plus Jakarta Sans">${slice[i].toLocaleString('id-ID')}</text>`;
+        } else if (n <= 7) {
+          svg += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="${s.color}" opacity="0.7"/>`;
+        }
+      });
+    } else {
+      // Multi-series: dot only at last point
+      svg += `<circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="4" fill="white" stroke="${s.color}" stroke-width="2"/>`;
     }
+  });
 
-    const pathD = smoothPath(pts);
-    const lastPt = pts[pts.length-1];
-    const areaClose = ` L${lastPt[0].toFixed(1)},${(H-PB).toFixed(1)} L${pts[0][0].toFixed(1)},${(H-PB).toFixed(1)} Z`;
-
-    svg += `<path d="${pathD}${areaClose}" fill="url(#g_${ser.key})"/>`;
-    svg += `<path d="${pathD}" fill="none" stroke="${ser.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-
-    // Points
-    pts.forEach((p, i) => {
-      const isLast = i === pts.length - 1;
-      if (isLast) {
-        svg += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="5" fill="white" stroke="${ser.color}" stroke-width="2.5"/>`;
-        // Value label at last point
-        svg += `<text x="${(p[0]-4).toFixed(1)}" y="${(p[1]-10).toFixed(1)}" font-size="9" font-weight="700" fill="${ser.color}" text-anchor="middle" font-family="Plus Jakarta Sans">${slice[i].toLocaleString('id-ID')}</text>`;
-      } else if (n <= 6) {
-        svg += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="${ser.color}" opacity="0.7"/>`;
-      }
-    });
-  }
-
-  // Invisible hover bands
+  // Invisible hover bands for tooltip
   labels.forEach((_, i) => {
     const x = xPos(i);
-    const bw = n > 1 ? cW / (n-1) : cW;
-    svg += `<rect class="hover-band" x="${(x - bw/2).toFixed(1)}" y="${PT}" width="${bw.toFixed(1)}" height="${cH}" fill="transparent" data-i="${i}" style="cursor:crosshair;"/>`;
+    const bw = n > 1 ? cW / (n - 1) : cW;
+    svg += `<rect class="hband" x="${(x - bw/2).toFixed(1)}" y="${PT}" width="${bw.toFixed(1)}" height="${cH}" fill="transparent" data-i="${i}" style="cursor:crosshair;"/>`;
   });
 
   document.getElementById('svgPert').innerHTML = svg;
 
-  // Legend chips (semua mode only)
+  // Legend (semua mode)
   const legendEl = document.getElementById('pertLegend');
   if (filterVal === 'semua') {
     legendEl.style.display = 'flex';
@@ -685,7 +688,7 @@ function renderPert() {
     legendEl.style.display = 'none';
   }
 
-  setupHover(labels, activeSeries, visibleSeries, filterVal);
+  setupHover(labels, activeSeries, drawSeries, filterVal);
 }
 
 function toggleKey(key) {
@@ -693,36 +696,35 @@ function toggleKey(key) {
   renderPert();
 }
 
-function setupHover(labels, activeSeries, visibleSeries, filterVal) {
-  const svgEl    = document.getElementById('svgPert');
-  const tooltip  = document.getElementById('tooltip');
-  const crossEl  = document.getElementById('crosshair');
-  const wrap     = document.getElementById('pertWrap');
-  const bands    = svgEl.querySelectorAll('.hover-band');
+function setupHover(labels, activeSeries, drawSeries, filterVal) {
+  const svgEl   = document.getElementById('svgPert');
+  const tooltip = document.getElementById('tooltip');
+  const mlEl    = document.getElementById('monthLine');
+  const wrap    = document.getElementById('pertWrap');
+  const bands   = svgEl.querySelectorAll('.hband');
+  const W=560, PL=44, PR=14, cW=W-PL-PR;
+  const n = labels.length;
 
   bands.forEach(band => {
-    band.addEventListener('mouseenter', e => {
-      const i       = parseInt(band.getAttribute('data-i'));
-      const absIdx  = range.from + i;
+    band.addEventListener('mouseenter', () => {
+      const i      = parseInt(band.getAttribute('data-i'));
+      const absIdx = range.from + i;
 
-      // Position crosshair
+      // Position vertical line
       const svgRect  = svgEl.getBoundingClientRect();
       const wrapRect = wrap.getBoundingClientRect();
-      const W=560, PL=40, PR=12, cW=W-PL-PR, n=labels.length;
-      const xFrac = n > 1 ? i/(n-1) : 0.5;
-      const xPx   = (PL/W + xFrac*(cW/W)) * svgRect.width;
+      const xFrac = n > 1 ? i / (n - 1) : 0.5;
+      const xPx = (PL/W + xFrac * (cW/W)) * svgRect.width;
 
-      crossEl.style.left   = (xPx - 0.5) + 'px';
-      crossEl.style.top    = '0px';
-      crossEl.style.height = (svgRect.height - 24) + 'px';
-      crossEl.classList.add('show');
+      mlEl.style.left   = xPx + 'px';
+      mlEl.style.top    = '0';
+      mlEl.style.height = (svgRect.height - 26) + 'px';
+      mlEl.classList.add('show');
 
-      // Build tooltip rows
-      const shown = filterVal === 'semua'
-        ? activeSeries.filter(s => !hiddenKeys.has(s.key))
-        : activeSeries;
+      // Tooltip content
+      const shown = filterVal === 'semua' ? activeSeries.filter(s => !hiddenKeys.has(s.key)) : activeSeries;
       let total = 0;
-      let rows  = shown.map(s => {
+      let rows = shown.map(s => {
         const v = s.data[absIdx]; total += v;
         return `<div class="tooltip-row">
           <div class="tooltip-dot" style="background:${s.color};"></div>
@@ -730,6 +732,7 @@ function setupHover(labels, activeSeries, visibleSeries, filterVal) {
           <span class="tooltip-num">${v.toLocaleString('id-ID')}</span>
         </div>`;
       }).join('');
+
       if (filterVal === 'semua' && shown.length > 1) {
         rows += `<div class="tooltip-divider"></div>
           <div class="tooltip-row">
@@ -739,32 +742,30 @@ function setupHover(labels, activeSeries, visibleSeries, filterVal) {
           </div>`;
       }
 
-      // Prev month delta
       if (absIdx > 0) {
-        const prevTotal = shown.reduce((s2, s) => s2 + s.data[absIdx-1], 0);
+        const prevTotal = shown.reduce((s2, s) => s2 + s.data[absIdx - 1], 0);
         const d = total - prevTotal;
         rows += `<div class="tooltip-divider"></div>
           <div class="tooltip-row">
-            <div class="tooltip-dot" style="background:${d>=0?'#1a6b4a':'#e05252'};"></div>
+            <div class="tooltip-dot" style="background:${d >= 0 ? '#1a6b4a' : '#e05252'};"></div>
             <span class="tooltip-lbl">vs bulan lalu</span>
-            <span class="tooltip-num" style="color:${d>=0?'#4ade80':'#f87171'};">${d>=0?'+':''}${d.toLocaleString('id-ID')}</span>
+            <span class="tooltip-num" style="color:${d >= 0 ? '#4ade80' : '#f87171'};">${d >= 0 ? '+' : ''}${d.toLocaleString('id-ID')}</span>
           </div>`;
       }
 
       tooltip.innerHTML = `<div class="tooltip-month">${labels[i]} 2024</div>${rows}`;
 
-      // Position tooltip (avoid overflow)
-      const tW = 165;
-      let left = xPx + 12;
-      if (left + tW > wrapRect.width - 10) left = xPx - tW - 12;
+      const tW = 170;
+      let left = xPx + 14;
+      if (left + tW > wrapRect.width - 8) left = xPx - tW - 14;
       tooltip.style.left = Math.max(0, left) + 'px';
-      tooltip.style.top  = '8px';
+      tooltip.style.top = '6px';
       tooltip.classList.add('show');
     });
 
     band.addEventListener('mouseleave', () => {
       tooltip.classList.remove('show');
-      crossEl.classList.remove('show');
+      mlEl.classList.remove('show');
     });
   });
 }
@@ -792,7 +793,6 @@ function renderPie(svgId, legendId, data) {
   const legend = document.getElementById(legendId);
   const total  = data.reduce((s, d) => s + d.val, 0);
   const cx=65, cy=65, r=56, ir=30;
-
   let a = -Math.PI / 2, inner = '';
   data.forEach(item => {
     const da = (item.val/total) * Math.PI * 2;
@@ -810,7 +810,6 @@ function renderPie(svgId, legendId, data) {
   inner += `<text x="${cx}" y="${cy-4}" font-size="14" font-weight="800" fill="#1d2939" text-anchor="middle" font-family="Plus Jakarta Sans">${total.toLocaleString('id-ID')}</text>`;
   inner += `<text x="${cx}" y="${cy+12}" font-size="8" fill="#98a2b3" text-anchor="middle" font-family="DM Sans">Total</text>`;
   svg.innerHTML = inner;
-
   legend.innerHTML = data.map(item => {
     const pct = ((item.val/total)*100).toFixed(1);
     return `<div class="pie-legend-item">
@@ -821,6 +820,18 @@ function renderPie(svgId, legendId, data) {
     </div>`;
   }).join('');
 }
+
+// ===== USER MENU =====
+function toggleUserMenu(e) {
+  e.stopPropagation();
+  document.getElementById('userDropdown').classList.toggle('open');
+}
+function closeUserMenu() {
+  document.getElementById('userDropdown').classList.remove('open');
+}
+document.addEventListener('click', function() {
+  document.getElementById('userDropdown').classList.remove('open');
+});
 
 // ===== INIT =====
 renderPert();
